@@ -41,7 +41,7 @@ const SubjectFilter = () => {
     }, 100);
 
     return () => clearTimeout(delayDebounceFn);
-  }, [subject]); // Only depend on subject
+  }, [subject, searchParams, router]); // Include all dependencies
 
   return (
     <Select onValueChange={setSubject} value={subject}>

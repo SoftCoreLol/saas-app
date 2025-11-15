@@ -37,22 +37,39 @@ export const createCompanion = async(formData:CreateCompanion)=>{
 export const getAllCompanions = async({limit=10,page=1,subject,topic}:GetAllCompanions)=>{
     const supabase = createSupabaseClient();
 
+    // Validate and sanitize pagination parameters
+    const safeLimit = Math.min(Math.max(Number(limit) || 10, 1), 100); // Max 100, min 1
+    const safePage = Math.max(Number(page) || 1, 1); // Min 1
+
     let query = supabase.from('companions').select('*');
 
-    if(subject && subject.trim() !== ''){
-        query = query.ilike('subject', `%${subject}%`)
+    // Sanitize and validate subject filter
+    if(subject && typeof subject === 'string' && subject.trim() !== ''){
+        const sanitizedSubject = subject.trim().replace(/['";\\\x00-\x1f]/g, '');
+        if(sanitizedSubject) {
+            query = query.ilike('subject', `%${sanitizedSubject}%`)
+        }
     }
 
-    if(topic && topic.trim()!== ''){
-        const formattedTopic = topic.trim().split(' ').join(' & ');
-        query = query.textSearch('topic', formattedTopic)
+    // Sanitize and validate topic search
+    if(topic && typeof topic === 'string' && topic.trim()!== ''){
+        const sanitizedTopic = topic.trim()
+            .replace(/['";\\\x00-\x1f]/g, '') // Remove dangerous characters
+            .split(' ')
+            .filter(word => word.length > 0 && word.length < 50) // Filter valid words
+            .join(' & ');
+        
+        if(sanitizedTopic) {
+            query = query.textSearch('topic', sanitizedTopic)
+        }
     }
 
     
     
 
 
-    query = query.range((page-1)*limit,page*limit-1)
+    // Apply pagination with validated parameters
+    query = query.range((safePage-1)*safeLimit, safePage*safeLimit-1)
 
 
     const {data : companions, error } = await query;

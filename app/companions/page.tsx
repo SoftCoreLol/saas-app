@@ -6,13 +6,19 @@ import { getSubjectColor } from '@/lib/utils';
 
 const CompanionLibrary = async({searchParams}:SearchParams) => {
 
-  const subject = searchParams.subject || '';
-  const topic = searchParams.topic || '';
+  // Await searchParams (Next.js 15+ requirement)
+  const params = await searchParams;
+  const subject = params.subject || '';
+  const topic = params.topic || '';
 
   const hasFilters = !!subject || !!topic;
 
-  // Only fetch companions if a search query or filter is active
-  const companions = hasFilters ? await getAllCompanions({subject,topic}) : [];
+  // Fetch companions - show all if no filters, or filtered results
+  const companions = await getAllCompanions({
+    subject,
+    topic,
+    limit: 20
+  });
 
 
   return (
@@ -27,7 +33,14 @@ const CompanionLibrary = async({searchParams}:SearchParams) => {
             <CompanionCard key={companion.id} {...companion} color={getSubjectColor(companion.subject)}/>
           )) : (
             <div className='flex items-center justify-center w-full h-full col-span-full'>
-              <p className='text-lg text-gray-500'>No companions found. Try a different search!</p>
+              {hasFilters ? (
+                <p className='text-lg text-gray-500'>No companions match your search. Try different keywords or filters!</p>
+              ) : (
+                <div className='text-center'>
+                  <p className='text-lg text-gray-500'>No companions available yet.</p>
+                  <p className='text-sm text-gray-400 mt-2'>Try searching by topic or filtering by subject above.</p>
+                </div>
+              )}
             </div>
           )}
         </section>

@@ -25,7 +25,7 @@ const SearchInput: React.FC<SearchInputProps> = ({
     if (topicQuery !== searchQuery) {
       setSearchQuery(topicQuery);
     }
-  }, [topicQuery, searchQuery]);
+  }, [topicQuery]); // Remove searchQuery to prevent infinite loop
 
   // Debounced search handler
   useEffect(() => {
@@ -47,7 +47,8 @@ const SearchInput: React.FC<SearchInputProps> = ({
       }
 
       // Only push to router if the URL has actually changed
-      if (pathname + searchParams.toString() !== newUrl) {
+      const currentUrl = searchParams.toString() ? `${pathname}?${searchParams.toString()}` : pathname;
+      if (currentUrl !== newUrl) {
         router.push(newUrl, { scroll: false });
       }
     }, 500); // 500ms debounce delay
