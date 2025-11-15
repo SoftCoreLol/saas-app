@@ -23,7 +23,7 @@ const SubjectFilter = () => {
   useEffect(() => {
     const delayDebounceFn = setTimeout(() => {
       let newUrl = "";
-      
+
       if (subject === "all" || !subject) {
         newUrl = removeKeysFromUrlQuery({
           params: searchParams.toString(),
@@ -36,12 +36,12 @@ const SubjectFilter = () => {
           value: subject,
         });
       }
-      
+
       router.push(newUrl, { scroll: false });
     }, 100);
 
     return () => clearTimeout(delayDebounceFn);
-  }, [subject, searchParams, router]); // Include all dependencies
+  }, [subject, searchParams.toString(), router]);
 
   return (
     <Select onValueChange={setSubject} value={subject}>
