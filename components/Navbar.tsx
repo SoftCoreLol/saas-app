@@ -1,11 +1,19 @@
+'use client'
 import Image from 'next/image'
 import Link from 'next/link'
 import NavItems from './NavItems'
 import NewButton from './ui/Sign-in-button-landing-page'
 import { SignInButton,SignedOut,UserButton,SignedIn } from '@clerk/nextjs'
-
+import { useRouter } from 'next/navigation'
 
 const Navbar = () => {
+
+  const router = useRouter();
+
+  const handleRouter = () =>{
+    router.push('/sign-in');
+  }
+
   return (
     <header>
         <nav className='navbar  h-[60px] min-w-screen bg-white backdrop-blur-sm'>
@@ -19,13 +27,13 @@ const Navbar = () => {
                 <NavItems/>
                 <SignedOut>
                   <SignInButton>
-                    <NewButton onClick={undefined}/>
+                    <NewButton onClick={handleRouter} />
                   </SignInButton>
                 </SignedOut>
                 <SignedIn>
                   <UserButton/>
                 </SignedIn>
-                
+
 
             </div>
 

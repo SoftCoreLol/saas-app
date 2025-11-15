@@ -7,16 +7,17 @@ interface CompanionCardProps{
   subject:string,
   topic:string,
   duration:number,
-  color:string,
+  color?:string,
 }
-  
+
 
 
 
 const CompanionCard = ({id,name,subject,topic,duration,color}:CompanionCardProps) => {
-  
+  const backgroundColor = color || '#f0f0f0'; // Default color if none provided
+
   return (
-    <article className="companion-card" style={{backgroundColor:color}}>
+    <article className="companion-card" style={{backgroundColor}}>
       <div className="flex justify-between items-center">
         <div className="subject-badge">
           {subject}
