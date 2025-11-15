@@ -143,10 +143,10 @@ body {
     @apply flex gap-4 justify-between items-start w-full max-lg:flex-col-reverse max-lg:items-center;
   }
   .companions-grid {
-    @apply flex flex-wrap gap-4 w-full max-md:justify-center;
+    @apply grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 w-full place-items-center min-h-[50vh];
   }
   .companion-card {
-    @apply flex flex-col rounded-4xl border border-black px-4 py-4 gap-5 w-full sm:max-w-[410px] md:max-w-[480px] lg:max-w-[480px] h-[280px];
+    @apply flex flex-col rounded-4xl border border-black px-6 py-5 gap-5 w-full sm:max-w-[320px] md:max-w-[380px] lg:max-w-[420px] h-[300px];
   }
   .subject-badge {
     @apply bg-black text-white rounded-4xl text-sm px-2 py-1 capitalize;

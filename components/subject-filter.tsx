@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Select,
   SelectContent,
@@ -45,7 +45,7 @@ const SubjectFilter = () => {
 
   return (
     <Select onValueChange={setSubject} value={subject}>
-      <SelectTrigger className="w-full sm:w-[180px] input capitalize">
+      <SelectTrigger className="w-full sm:w-80 h-11 input capitalize flex items-center">
         <SelectValue placeholder="Filter by subject" />
       </SelectTrigger>
       <SelectContent>

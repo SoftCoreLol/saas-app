@@ -22,10 +22,8 @@ const SearchInput: React.FC<SearchInputProps> = ({
 
   // Update local state when URL parameter changes
   useEffect(() => {
-    if (topicQuery !== searchQuery) {
-      setSearchQuery(topicQuery);
-    }
-  }, [topicQuery]); // Remove searchQuery to prevent infinite loop
+    setSearchQuery(topicQuery);
+  }, [topicQuery]);
 
   // Debounced search handler
   useEffect(() => {
@@ -61,11 +59,11 @@ const SearchInput: React.FC<SearchInputProps> = ({
   }, [searchQuery, searchParams, router, pathname]);
 
   return (
-    <div className="relative border border-black rounded-lg items-center flex gap-2 px-2 py-1 h-fit">
-      <Image src={'/icons/search.svg'} alt="search" width={16} height={16}/>
+    <div className="relative border border-black rounded-lg items-center flex gap-2 px-3 py-2 h-11 w-full sm:w-80">
+      <Image src={'/icons/search.svg'} alt="search" width={18} height={18}/>
       <input
         placeholder={placeholder}
-        className="outline-none w-full"
+        className="outline-none w-full text-sm"
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
       />

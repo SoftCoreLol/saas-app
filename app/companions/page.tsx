@@ -4,6 +4,13 @@ import SubjectFilter from '@/components/subject-filter';
 import { getAllCompanions } from '@/lib/actions/companion.actions';
 import { getSubjectColor } from '@/lib/utils';
 
+interface SearchParams {
+  searchParams: Promise<{
+    subject?: string;
+    topic?: string;
+  }>;
+}
+
 const CompanionLibrary = async({searchParams}:SearchParams) => {
 
   // Await searchParams (Next.js 15+ requirement)
@@ -22,16 +29,25 @@ const CompanionLibrary = async({searchParams}:SearchParams) => {
 
 
   return (
-    <main>
-      <section className='flex justify-between gap-4 max-sm:flex-col'>
-        <div className='flex gap-4 '>
-          <SearchInput/>
-          <SubjectFilter/>
+    <main className="p-4  w-7xl mx-auto">
+      <div className="mb-6">
+        <h1 className="text-3xl font-bold">Companion Library</h1>
+      </div>
+      <section className='flex flex-col gap-6'>
+        <div className='flex flex-col sm:flex-row gap-4'>
+          <div className='flex-1 min-w-0'>
+            <SearchInput/>
+          </div>
+          <div className='flex-1 min-w-0'>
+            <SubjectFilter/>
+          </div>
         </div>
         <section className='companions-grid'>
-          {companions && companions.length > 0 ? companions.map((companion)=>(
-            <CompanionCard key={companion.id} {...companion} color={getSubjectColor(companion.subject)}/>
-          )) : (
+          {companions && companions.length > 0 ? (
+            companions.map((companion) => (
+              <CompanionCard key={companion.id} {...companion} color={getSubjectColor(companion.subject)}/>
+            ))
+          ) : (
             <div className='flex items-center justify-center w-full h-full col-span-full'>
               {hasFilters ? (
                 <p className='text-lg text-gray-500'>No companions match your search. Try different keywords or filters!</p>
