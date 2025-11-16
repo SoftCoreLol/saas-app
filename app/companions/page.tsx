@@ -1,10 +1,10 @@
 import CompanionCard from '@/components/CompanionCard';
-import DeleteCompanionButton from '@/components/DeleteCompanions';
+
 import SearchInput from '@/components/search-input';
 import SubjectFilter from '@/components/subject-filter';
 import { getAllCompanions } from '@/lib/actions/companion.actions';
 import { getSubjectColor } from '@/lib/utils';
- // Import the delete button
+
 
 interface SearchParams {
   searchParams: Promise<{
@@ -51,7 +51,6 @@ const CompanionLibrary = async({searchParams}:SearchParams) => {
                   {...companion} 
                   color={getSubjectColor(companion.subject)}
                 />
-                <DeleteCompanionButton companionId={companion.id} />
               </div>
             ))
           ) : (

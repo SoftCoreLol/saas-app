@@ -238,6 +238,7 @@ const CompanionComponent = memo(({
             <button
               className='btn-mic flex items-center gap-2 mt-4'
               onClick={toggleMicrophone}
+              disabled={callStatus !== CallStatus.ACTIVE}
             >
               <Image
                 src={isMuted ? `/icons/mic-off.svg` : `/icons/mic-on.svg`}
@@ -246,7 +247,7 @@ const CompanionComponent = memo(({
                 height={36}
                 unoptimized={true}
               />
-              <p className='max-sm:hidden'>
+              <p className='max-sm:hidden' >
                 {isMuted ? 'Muted' : 'Unmuted'}
               </p>
             </button>
@@ -272,7 +273,7 @@ const CompanionComponent = memo(({
 
       </section>
       
-      {/* Fixed Transcript Section */}
+      
       <section className='transcript mt-6 w-full max-w-5xl'>
         <div 
           ref={transcriptContainerRef}
@@ -283,7 +284,7 @@ const CompanionComponent = memo(({
           ) : (
             messages.map((message, index) => (
               <div 
-                key={`${message.timestamp}-${index}`} 
+                key={`${index}`} 
                 className={cn(
                   'mb-2 p-2 rounded-lg',
                   message.role === 'assistant' 

@@ -1,6 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
 
+
+
 interface CompanionCardProps{
   name:string;
   id:string;
@@ -12,19 +14,26 @@ interface CompanionCardProps{
 
 
 
+console.log()
+
+
+
 
 const CompanionCard = ({id,name,subject,topic,duration,color}:CompanionCardProps) => {
   const backgroundColor = color || '#f0f0f0'; // Default color if none provided
 
   return (
-    <article className="companion-card" style={{backgroundColor}}>
+    <article className="companion-card relative" style={{backgroundColor}}>
       <div className="flex justify-between items-center">
         <div className="subject-badge">
           {subject}
         </div>
-        <button className="companion-bookmark">
-          <Image src={"/icons/bookmark.svg"} alt="bookmark" width={12.5} height={15}/>
-        </button>
+        <div className="flex items-center gap-2">
+          <button className="companion-bookmark">
+            <Image src={"/icons/bookmark.svg"} alt="bookmark" width={12.5} height={15}/>
+          </button>
+          
+        </div>
       </div>
       <div className="flex flex-col items-start text-left grow">
         <h2 className="text-2xl font-bold">{name}</h2>

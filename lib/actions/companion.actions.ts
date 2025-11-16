@@ -1,7 +1,9 @@
 'use server'
 import { auth } from "@clerk/nextjs/server"
-import { createSupabaseClient } from "../supabase"
+
 import { create } from "domain"
+import { revalidatePath } from "next/cache"
+import { createSupabaseClient } from "../supabase"
 
 
 
@@ -28,26 +30,6 @@ export const createCompanion = async(formData:CreateCompanion)=>{
     }
 
     return data[0];
-
-}
-
-
-export const deleteCompanion = async(companionId:string)=>{
-    const supabase = createSupabaseClient();
-
-    const userId = await auth()
-
-    if (!userId) {
-        throw new Error('User not authenticated')
-    }
-
-    const {data,error} = await supabase
-        .from('companions')
-        .delete()
-        .eq('id',companionId)
-        .eq('userId',userId)
-
-
 
 }
 
@@ -101,6 +83,8 @@ export const getAllCompanions = async({limit=10,page=1,subject,topic}:GetAllComp
 }
 
 
+
+
 export const getCompanion = async(id:string)=>{
     const supabase = createSupabaseClient();
 
@@ -121,3 +105,6 @@ export const getCompanion = async(id:string)=>{
 
 
 }
+
+
+
