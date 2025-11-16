@@ -1,8 +1,10 @@
 import CompanionCard from '@/components/CompanionCard';
+import DeleteCompanionButton from '@/components/DeleteCompanions';
 import SearchInput from '@/components/search-input';
 import SubjectFilter from '@/components/subject-filter';
 import { getAllCompanions } from '@/lib/actions/companion.actions';
 import { getSubjectColor } from '@/lib/utils';
+ // Import the delete button
 
 interface SearchParams {
   searchParams: Promise<{
@@ -27,9 +29,8 @@ const CompanionLibrary = async({searchParams}:SearchParams) => {
     limit: 20
   });
 
-
   return (
-    <main className="p-4  w-7xl mx-auto">
+    <main className="p-4 w-7xl mx-auto">
       <div className="mb-6">
         <h1 className="text-3xl font-bold">Companion Library</h1>
       </div>
@@ -45,7 +46,13 @@ const CompanionLibrary = async({searchParams}:SearchParams) => {
         <section className='companions-grid'>
           {companions && companions.length > 0 ? (
             companions.map((companion) => (
-              <CompanionCard key={companion.id} {...companion} color={getSubjectColor(companion.subject)}/>
+              <div key={companion.id} className="relative">
+                <CompanionCard 
+                  {...companion} 
+                  color={getSubjectColor(companion.subject)}
+                />
+                <DeleteCompanionButton companionId={companion.id} />
+              </div>
             ))
           ) : (
             <div className='flex items-center justify-center w-full h-full col-span-full'>
@@ -53,7 +60,7 @@ const CompanionLibrary = async({searchParams}:SearchParams) => {
                 <p className='text-lg text-gray-500'>No companions match your search. Try different keywords or filters!</p>
               ) : (
                 <div className='text-center'>
-                  <p className='text-lg text-gray-500'>No companions available yet.</p>
+                  <p className='text-lg text-gray-500'>No companions available yet</p>
                   <p className='text-sm text-gray-400 mt-2'>Try searching by topic or filtering by subject above.</p>
                 </div>
               )}
@@ -61,7 +68,6 @@ const CompanionLibrary = async({searchParams}:SearchParams) => {
           )}
         </section>
       </section>
-
     </main>
   )
 }

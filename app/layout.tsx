@@ -28,7 +28,7 @@ export default function RootLayout({
         >
 
           <Navbar/>
-          <main className="min-h-screen max-w-screen">
+          <main className="min-h-screen max-w-screen no-scrollbar">
             {children}
           </main>
 

@@ -15,7 +15,7 @@ const Navbar = () => {
   }
 
   return (
-    <header>
+    <header className='sticky top-0 z-50'>
         <nav className='navbar  h-[60px] min-w-screen bg-white backdrop-blur-sm'>
             <Link href='/'>
                 <div className='flex items-center gap-2.5 cursor-pointer'>
