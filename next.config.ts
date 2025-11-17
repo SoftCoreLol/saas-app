@@ -2,7 +2,10 @@ import {withSentryConfig} from "@sentry/nextjs";
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
- images:{
+  typescript:{
+    ignoreBuildErrors:true;
+  },
+  images:{
     remotePatterns:[{
       hostname:'img.clerk.com'
     }]

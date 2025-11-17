@@ -1,10 +1,8 @@
 'use server'
 import { auth } from "@clerk/nextjs/server"
 
-import { create } from "domain"
 import { revalidatePath } from "next/cache"
 import { createSupabaseClient } from "../supabase"
-import { createSearchParamsFromClient } from "next/dist/server/request/search-params"
 
 
 
@@ -13,17 +11,23 @@ import { createSearchParamsFromClient } from "next/dist/server/request/search-pa
 export const createCompanion = async(formData:CreateCompanion)=>{
 
 
-    const { userId } = await auth()
+    const { userId:author } = await auth()
 
-    if (!userId) {
+    if (!author) {
         throw new Error('User not authenticated')
+    }
+
+    // Check permissions before creating companion
+    const hasPermission = await newCompanionPermissions()
+    if (!hasPermission) {
+        throw new Error('Companion limit reached. Please upgrade your plan to create more companions.')
     }
 
     const supabase = createSupabaseClient();
 
     const {data,error } = await supabase
         .from('companions')
-        .insert({...formData, userId})  // Add the userId to the insert data
+        .insert({...formData, author})  
         .select()
 
     if (error || !data ){
@@ -248,43 +252,42 @@ export const getBookmarkedCompanions = async (userId: string) => {
 
 
 export const newCompanionPermissions = async()=>{
-    const {userId,has} = await auth()
+    const {userId:author,has} = await auth()
+
+    if (!author) {
+        throw new Error('User not authenticated')
+    }
 
     const supabase = createSupabaseClient()
 
     let limit = 0;
+
     if(has({plan:'pro'})){
         return true
+
     } else if (has({feature:'3_companion_limit'})){
         limit = 3
     
     } else if(has({feature:'10_companion_limit'})){
-        limit=3;
+        limit = 3; 
     }
 
     const {data,error} = await supabase
         .from('companions')
         .select('id',{count:'exact'})
-        .eq('author',userId)
+        .eq('author',author)
 
         if(error) {
+
             throw new Error(error.message)
+
         } else {
-            const companionCount = data?.length;
+            const companionCount:number = data?.length || 0;
 
             if(companionCount >= limit){
                 return false;
             } else{
                 return true;
             }
-            
-
         }
-        
-        
-        
-        
-        
-
-    
 }

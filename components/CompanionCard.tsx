@@ -32,7 +32,7 @@ const CompanionCard = ({id,name,subject,topic,duration,color}:CompanionCardProps
           <button className="companion-bookmark">
             <Image src={"/icons/bookmark.svg"} alt="bookmark" width={12.5} height={15}/>
           </button>
-          
+
         </div>
       </div>
       <div className="flex flex-col items-start text-left grow">
