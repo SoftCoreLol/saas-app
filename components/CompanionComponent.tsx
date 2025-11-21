@@ -148,7 +148,7 @@ console.log(subject,voice)
             </section>
 
             <section className="transcript">
-                <div className="transcript-message no-scrollbar">
+                <div className="transcript-message custom-scrollbar">
                     {messages.map((message, index) => {
                         if(message.role === 'assistant') {
                             return (

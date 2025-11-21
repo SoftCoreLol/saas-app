@@ -21,7 +21,7 @@ interface CompanionsListProps{
 
 const CompanionList = ({title,companions,className}:CompanionsListProps) => {
   return (
-    <article className={cn('companion-list w-full max-w-6xl mx-auto px-4',className)}>
+    <article className={cn('companion-list min-w-3xl max-w-6xl mx-auto px-4',className)}>
       <h2 className="font-bold text-3xl mb-6">{title}</h2>
       <Table className="border rounded-lg overflow-hidden">
         <TableHeader className="bg-gray-50">
@@ -58,7 +58,7 @@ const CompanionList = ({title,companions,className}:CompanionsListProps) => {
                       className="md:hidden"
                     />
                   </div>
-                  <div className="flex flex-col min-w-0">
+                  <div className="flex flex-col md:max-w-40">
                     <p className="font-semibold text-lg truncate">{name}</p>
                     <p className="text-muted-foreground truncate text-base">
                       {topic}

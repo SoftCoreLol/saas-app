@@ -4,15 +4,12 @@ import Link from 'next/link'
 import NavItems from './NavItems'
 import NewButton from './ui/Sign-in-button-landing-page'
 import { SignInButton,SignedOut,UserButton,SignedIn } from '@clerk/nextjs'
-import { useRouter } from 'next/navigation'
 
 const Navbar = () => {
 
-  const router = useRouter();
-
-  const handleRouter = () =>{
-    router.push('/sign-in');
-  }
+  
+  console.log('navbar rendered')
+  
 
   return (
     <header className='sticky top-0 z-50'>
@@ -27,7 +24,7 @@ const Navbar = () => {
                 <NavItems/>
                 <SignedOut>
                   <SignInButton>
-                    <NewButton onClick={handleRouter} />
+                    <NewButton >Sign In</NewButton>
                   </SignInButton>
                 </SignedOut>
                 <SignedIn>

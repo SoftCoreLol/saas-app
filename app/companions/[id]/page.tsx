@@ -32,7 +32,7 @@ const CompanionSession = async ({ params }: CompanionSessionPageProps) => {
   }
 
 console.log("Dynamic route param:", params);
-  
+
 
   return (
     <main className="w-full">
